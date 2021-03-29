@@ -1,0 +1,33 @@
+<%- include('partials/header') -%>
+<div class = 'card'>
+    <h1>
+        Welcome to the CIS 4339 Blogs!
+    </h1>
+    
+    <h2>
+        Create an Account!
+    </h2>
+    <form action = "/register" method = "POST">
+        <div class="form-group">
+          <label for="emailAddress">Email address</label>
+          <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword">Password</label>
+          <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="firstname" name="firstname" class="form-control" id="firstname" placeholder="First Name">
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="lastname" name="lastname" class="form-control" id="lastname" placeholder="Last Name">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+
+<%- include('partials/footer') -%>
+
