@@ -11,6 +11,8 @@ const ejs = require('ejs')
     require('./mongoosConnection')
 
 const users = require('./model/accounts');
+const blog = require('./model/blog');
+const { find } = require('./model/accounts');
 
 app.use(logger('dev'))
 app.use(cors());
@@ -28,14 +30,18 @@ app.set('view engine', 'ejs')
 app.get('/',(req,res) => {
     res.render('login')
 })
-app.get('/About',(req,res) => {
-    res.render('about')
-})
+
 app.get('/home',(req,res) => {
     res.render('home')
 })
-app.get('/new',(req,res) => {
-    res.render('new')
+app.get('/new', async (req,res) => {
+    const searchBlog = await blog.find(
+
+    )
+
+    res.render('new', {
+        blogs: searchBlog,
+    });
 })
 app.listen(5000, () => {
     console.log('http://localhost:5000')
@@ -65,7 +71,7 @@ app.post('/login' , async (req,res) => {
         //return;
     //}
     req.session.users = loginUser; 
-    console.log(req.session.users);
+    //console.log(req.session.users);
     //req.session;
     res.redirect('/About');
 
@@ -73,11 +79,37 @@ app.post('/login' , async (req,res) => {
 
 app.get('/About', async (req,res) => {
     if (req.session.users) {
-        console.log(req.session.users);
-        res.render('/About', {user:req.session.users});
+        const myBlog = await blog.find({
+            firstname: req.session.firstname,
+        });
+        console.log(myBlog);
+        res.render('About', {
+            user: req.session.users,
+            myBlog: myBlog,
+        });
     }
     else {
         res.redirect('/');
     }
 })
+
+
+app.post('/new', async (req,res) => {
+    if (req.session.users) {
+        res.render('new', {users:req.session.users});
+    }
+    else {
+        res.redirect('/');
+    }
+    const {firstname,title,body} = req.body;
+
+    const newPost = new blog({
+        firstname: req.body.firstname,
+        title: req.body.title,
+        body: req.body.body,
+    });
+    newPost.save().then().catch((err)=> 
+    console.log('error'));
+    res.redirect('/new');
+});
 

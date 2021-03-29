@@ -1,4 +1,17 @@
 <%- include('partials/header') %>
-<h1>About</h1>
-<h4> <%= user.firstname%> </h4>
+<h1>My Page</h1>
+
+<h4> Welcome back <%= user.firstname%>! </h4>
+
+<div class = 'card'>
+    <% myBlog.reverse() %> <% myBlog.forEach(blog => { %>
+        <h4>
+            <% blog.firstname %>
+        </h4>
+    <h4>
+        <% blog.body %>
+    </h4>
+    <%}) %>
+
+</div>
 <%- include('partials/footer') %>
